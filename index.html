@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مصاريف البيت — نسخة تجريبية</title>
+<style>
+:root{--bg:#f6f5f1;--card:#fff;--tx:#1f2421;--mut:#6b726d;--ac:#1d7a5f;--ac2:#e8f3ee;--bd:#e2e0d8;--wr:#b4531f;--rd:#b3261e;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141816;--card:#1e2421;--tx:#ecefed;--mut:#9aa39d;--ac:#4cc39b;--ac2:#1f3a30;--bd:#2f3732;--wr:#f0955a;--rd:#ff8a80;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141816;--card:#1e2421;--tx:#ecefed;--mut:#9aa39d;--ac:#4cc39b;--ac2:#1f3a30;--bd:#2f3732;--wr:#f0955a;--rd:#ff8a80;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;line-height:1.5}
+.w{max-width:640px;margin:0 auto;padding:14px}
+h1{font-size:20px;margin:6px 0 12px}h2{font-size:15px;margin:0 0 8px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:12px}
+.nav{display:flex;align-items:center;gap:8px}.nav button{width:42px}.nav input{flex:1;text-align:center}
+.sum{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.sum div{background:var(--ac2);border-radius:10px;padding:10px;font-size:13px;color:var(--mut)}
+.sum b{display:block;font-size:16px;color:var(--tx)}
+.sum .t{grid-column:1/3}.sum .t b{font-size:22px;color:var(--ac)}
+.al{border-radius:10px;padding:10px;margin-top:10px;font-size:13px;display:none}
+.al.w1{display:block;background:#fff1e6;color:var(--wr)}.al.w2{display:block;background:#fde8e6;color:var(--rd)}
+.row{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--bd)}
+.row:last-child{border:0}.row small{display:block;color:var(--mut)}.row .a{white-space:nowrap;font-weight:600}
+.tag{font-size:11px;background:var(--ac2);color:var(--ac);border-radius:6px;padding:1px 6px;margin-inline-start:6px}
+.tag.i{color:var(--wr)}
+.x{background:none!important;border:0!important;color:var(--mut);font-size:18px;cursor:pointer;padding:0 6px!important;width:auto!important}
+input,select,button{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:10px;width:100%}
+button{cursor:pointer}button.p{background:var(--ac);color:#fff;border:0;font-weight:600}
+.tabs{display:flex;gap:6px;margin-bottom:10px}.tabs button{padding:8px}.tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+label{display:block;font-size:12px;color:var(--mut);margin:8px 0 3px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.pv{background:var(--ac2);border-radius:10px;padding:10px;margin-top:10px;font-size:13px}
+.em{color:var(--mut);text-align:center;padding:10px 0;font-size:13px}
+details{border-bottom:1px solid var(--bd);padding:8px 0}details:last-child{border:0}summary{cursor:pointer;display:flex;justify-content:space-between;gap:8px}table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}td{padding:6px 3px;border-top:1px solid var(--bd)}.pd{color:var(--ac)}.du{color:var(--wr)}.pb{width:auto;padding:3px 8px;font-size:12px;margin-top:3px}
+.bar{height:6px;border-radius:3px;background:var(--bd);margin-top:3px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac)}
+#bn{display:none;background:#fde8e6;color:var(--rd);border-radius:10px;padding:10px;margin-bottom:12px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>🏠 مصاريف البيت</h1>
+<p class="em" style="margin:0 0 8px">نسخة تجريبية للتجربة: بياناتك بتتحفظ على جهازك أنت بس، ومحدش بيشوفها.</p>
+<div id="bn"></div>
+<div id="rm"></div>
+<button id="gst" style="margin-bottom:12px">📋 كشف حساب الأقساط ↓</button>
+
+<div class="card">
+  <div class="nav"><button id="nx">›</button><input type="month" id="mo"><button id="pv">‹</button></div>
+  <div class="sum">
+    <div>مشتريات عادية<b id="s1">0</b></div>
+    <div>أقساط الشهر ده<b id="s2">0</b></div>
+    <div class="t">إجمالي الشهر<b id="s3">0</b></div>
+  </div>
+  <div class="al" id="al"></div>
+  <label>ميزانية الشهر (ج) — عدّلها في أي وقت، وبتفضل نفسها للشهور اللي بعده</label>
+  <input id="bg" type="number" inputmode="decimal" min="0">
+</div>
+
+<div class="card"><h2>كشف حساب الشهر</h2><div id="ms"></div></div>
+<div class="card"><h2>تفاصيل الشهر</h2><div id="list"></div></div>
+<div class="card"><h2>حسب التصنيف</h2><div id="cats"></div></div>
+
+<div class="card">
+  <div class="tabs"><button id="t1" class="on">شراء عادي</button><button id="t2">شراء بالقسط</button><button id="t3">الجمعية / Money Fellows</button></div>
+  <label>اسم الحاجة</label><input id="nm" placeholder="مثلًا: زجاجة زيت">
+  <div class="g2">
+    <div><label id="lp">سعر الوحدة (ج)</label><input id="pr" type="number" inputmode="decimal" min="0"></div>
+    <div><label>الكمية / العدد</label><input id="qt" type="number" inputmode="decimal" min="0" value="1"></div>
+  </div>
+  <label>التصنيف</label><select id="ct"></select>
+  <div class="pv" id="tq"></div>
+  <label id="ld">الشهر</label><input id="dm" type="month">
+  <div id="ins" style="display:none">
+    <div class="g2">
+      <div><label>عدد الشهور</label><input id="n" type="number" inputmode="numeric" min="1" value="6"></div>
+      <div><label>البنك</label><select id="pl"><option value="">اختار البنك…</option><option value="none">بدون بنك (من المحل)</option></select></div>
+    </div>
+    <div class="g2"><div><label>طبيعة التقسيط</label><select id="ty"><option value="">اختار…</option><option value="0">بدون فوايد</option><option value="spread">الفائدة بالقسط: جزء من الفائدة مع كل قسط شهريًا</option><option value="upfront">الفائدة الأول (الشهر الأقدم) والقسط الشهر اللي بعد الفائدة</option></select></div><div id="rw" style="display:none"><label>نسبة الفايدة الكلية %</label><input id="ir" type="number" inputmode="decimal" placeholder="اكتب النسبة"></div></div>
+    <label>أول قسط عند البنك</label><select id="dl"><option value="1">الشهر اللي بعد الشراء</option><option value="2" selected>بعد شهرين من الشراء</option></select>
+    <label>يوم السداد كل شهر (1 إلى 28)</label><input id="dd" type="number" inputmode="numeric" min="1" max="28" value="1">
+    <div class="pv" id="pw"></div>
+  </div>
+  <div id="gm" style="display:none"><div class="g2"><div><label>قيمة الدفعة الشهرية (ج)</label><input id="gma" type="number" inputmode="decimal" min="0"></div><div><label>عدد الشهور (الأعضاء)</label><input id="gn" type="number" inputmode="numeric" min="2"></div></div><div class="g2"><div><label>دورك (رقم الشهر اللي هتستلم فيه)</label><input id="gt" type="number" inputmode="numeric" min="1"></div><div><label>يوم الدفع كل شهر (1 إلى 28)</label><input id="gd" type="number" inputmode="numeric" min="1" max="28" value="1"></div></div><div class="em" style="text-align:start">رسوم الجمعية بتدخلها يدويًا وقت تسجيل كل دفعة، من «كشف حساب الأقساط».</div><div class="pv" id="gp"></div></div>
+  <button class="p" id="add" style="margin-top:12px">إضافة</button>
+</div>
+
+<div class="card">
+  <h2>البنوك المحفوظة</h2>
+  <select id="bs"><option value="">اختار بنك…</option></select><div id="bi" class="em" style="text-align:start;padding:6px 0"></div><button id="bdel" style="display:none;color:var(--rd);margin-bottom:6px">حذف البنك ده</button>
+  <div id="bl" style="display:none"></div>
+  <div class="g3" style="margin-top:8px">
+    <div><label>اسم البنك</label><input id="bk"></div>
+    <div><label>النسبة %</label><input id="rt" type="number" inputmode="decimal" placeholder="اختياري"></div>
+    <div><label>النظام</label><select id="md"><option value="spread">الفائدة بالقسط (كل شهر)</option><option value="upfront">الفائدة الأول والقسط الشهر اللي بعدها</option></select></div>
+  </div>
+  <label>أول قسط عند البنك ده</label><select id="bd"><option value="">حسب النظام</option><option value="1">الشهر اللي بعد الشراء</option><option value="2">بعد شهرين</option></select>
+  <button id="ab" style="margin-top:8px">حفظ / تعديل البنك</button>
+</div>
+
+<div class="card"><h2>الأقساط المتبقية</h2><div id="rem"></div></div>
+<div class="card"><h2>كشف حساب الأقساط</h2><div id="st"></div></div>
+<p class="em">نسخة تجريبية: بيانات المثال اتحمّلت تلقائيًا.<br><button id="rst" style="width:auto;padding:4px 10px;font-size:12px;margin-top:6px">مسح كل بياناتي ورجوع للمثال</button></p>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const CATS=['أكل وشرب','منظفات','فواتير','مواصلات','صحة','أدوات منزلية','أخرى'];
+let items=[],banks=[],budget=0,bmap={},kind='cash',db=null;const ARM={};const OP=new Set();
+const budgetFor=m=>{if(bmap[m]!==undefined)return bmap[m];const ks=Object.keys(bmap).filter(k=>k<m).sort();return ks.length?bmap[ks[ks.length-1]]:budget};
+const f=n=>(Math.round(n*100)/100).toLocaleString('en-US',{maximumFractionDigits:2})+' ج';
+const esc=t=>String(t).replace(/[&<>"]/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[x]));
+const cur=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')};
+const addM=(ym,k)=>{const[y,m]=ym.split('-').map(Number);const i=y*12+(m-1)+k;return Math.floor(i/12)+'-'+String(i%12+1).padStart(2,'0')};
+const isPaid=(it,x,now)=>it.pm?!!(it.paid&&it.paid[x.ym+'|'+x.label]):x.ym<now;
+const payout=it=>({ym:addM(it.month,(it.turn||1)-1),amt:it.amount-(it.fee||0)});
+function payRow(it){const p=payout(it);return '<tr><td>'+p.ym+'-'+String(it.day||1).padStart(2,'0')+'</td><td>استلام الجمعية</td><td>+'+f(p.amt)+'</td><td class="ok">دورك</td></tr>'}
+function sched(it){
+  const r=[],up=it.mode==='upfront',sp=it.mode==='spread',rate=(up||sp)?it.rate/100:0;
+  const fee=up?it.amount*rate:0,per=sp?it.amount*(1+rate)/it.n:it.amount/it.n;
+  for(let i=0;i<it.n;i++){
+    r.push({ym:addM(it.month,it.delay!==undefined?(up?2:it.delay)+i:(up?i+1:i)),amt:per,label:(it.g?'قسط الجمعية ':'قسط ')+(i+1)+' من '+it.n});
+    if(i===0&&up)r.push({ym:addM(it.month,it.delay!==undefined?1:0),amt:fee,label:'عمولة/فايدة (تتخصم الأول)'});
+  }
+  return r;
+}
+const total=it=>it.type==='cash'?it.amount:sched(it).reduce((a,b)=>a+b.amt,0);
+function render(){
+  const m=$('mo').value||cur();let c=0,s=0,sp=0,h='';const cat={};
+  items.forEach(it=>{
+    if(it.type==='cash'){
+      if(it.month===m){c+=it.amount;cat[it.cat||'أخرى']=(cat[it.cat||'أخرى']||0)+it.amount;
+        h+=`<div class="row"><div>${esc(it.name)}<span class="tag">${esc(it.cat||'أخرى')}</span>${it.qty>1?'<small>'+it.qty+' × '+f(it.unit)+'</small>':''}</div><div class="a">${f(it.amount)}<button class="x" data-d="${it.id}">×</button></div></div>`}
+    }else{
+      sched(it).filter(x=>x.ym===m).forEach(x=>{const fe=it.g?((it.fees||{})[x.ym+'|'+x.label]||0):0;s+=x.amt+fe;if(isPaid(it,x,cur()))sp+=x.amt+fe;{const kk=it.g?'جمعية':'أقساط';cat[kk]=(cat[kk]||0)+x.amt+fe;}
+        h+=`<div class="row"><div>${esc(it.name)}<span class="tag i">${it.g?'جمعية':'قسط'}</span><small>${it.qty>1?it.qty+' × '+f(it.unit)+' · ':''}${x.label}${it.bank?' · '+esc(it.bank):''} · إجمالي الشراء ${f(total(it))}</small></div><div class="a">${f(x.amt+fe)}${fe?'<small>شامل رسوم '+f(fe)+'</small>':''}<button class="x" data-d="${it.id}">×</button></div></div>`});
+    }
+  });
+  let inc=0;items.filter(i=>i.g).forEach(it=>{const p=payout(it);if(p.ym===m){inc+=p.amt;h+=`<div class="row"><div>${esc(it.name)}<span class="tag">استلام جمعية</span><small>${p.ym}-${String(it.day||1).padStart(2,'0')}</small></div><div class="a ok">+${f(p.amt)}</div></div>`}});
+  const T=c+s;
+  $('list').innerHTML=h||'<div class="em">مفيش مصاريف في الشهر ده</div>';
+  $('s1').textContent=f(c);$('s2').textContent=f(s);$('s3').textContent=f(T);
+  const budget=budgetFor(m);
+  if(document.activeElement!==$('bg'))$('bg').value=budget||'';
+  let sm=`<div class="row"><span>الميزانية</span><b>${budget>0?f(budget):'غير محددة'}</b></div><div class="row"><span>المصروفات العادية</span><b>${f(c)}</b></div><div class="row"><span>الأقساط والجمعيات (مدفوع ${f(sp)} · غير مدفوع ${f(s-sp)})</span><b>${f(s)}</b></div><div class="row"><b>إجمالي المصروفات</b><b>${f(T)}</b></div>${inc>0?`<div class="row"><span class="ok">استلام جمعية هذا الشهر</span><b class="ok">+${f(inc)}</b></div>`:''}`;
+  if(budget>0){const d=budget-T,pc=Math.min(100,T/budget*100);sm+=`<div class="bar"><i style="width:${pc}%;${d<0?'background:var(--rd)':''}"></i></div><div class="row" style="border:0"><span>${d>=0?'✅ اتوفّر من الميزانية':'⚠️ تخطّينا الميزانية بـ'}</span><b style="color:${d>=0?'var(--ac)':'var(--rd)'}">${f(Math.abs(d))}${d>=0?' ('+Math.round(d/budget*100)+'%)':''}</b></div>`}
+  $('ms').innerHTML=sm;
+  const a=$('al');a.className='al';
+  if(budget>0){
+    if(T>budget){a.className='al w2';a.textContent='⚠️ عديت الميزانية بـ '+f(T-budget)}
+    else if(T>=budget*0.8){a.className='al w1';a.textContent='قربت من الميزانية — فاضل '+f(budget-T)}
+  }
+  const ks=Object.keys(cat).sort((x,y)=>cat[y]-cat[x]);
+  $('cats').innerHTML=ks.length?ks.map(k=>`<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between"><span>${esc(k)}</span><b>${f(cat[k])}</b></div><div class="bar"><i style="width:${T?cat[k]/T*100:0}%"></i></div></div>`).join(''):'<div class="em">لا توجد بيانات</div>';
+  // remaining installments (from the real current month)
+  const now=cur();let rt=0,rh='';
+  items.filter(i=>i.type==='inst').forEach(it=>{
+    const left=sched(it).filter(x=>!isPaid(it,x,now));if(!left.length)return;
+    const sum=left.reduce((p,q)=>p+q.amt,0);rt+=sum;
+    const cnt=left.filter(x=>x.label.startsWith('قسط')).length;
+    rh+=`<div class="row"><div>${esc(it.name)}${it.bank?'<small>'+esc(it.bank)+'</small>':''}<small>باقي ${cnt} قسط · آخر قسط ${left[left.length-1].ym}</small></div><div class="a">${f(sum)}</div></div>`;
+  });
+  let sh='';
+  items.filter(i=>i.type==='inst').sort((a,b)=>(b.ts||0)-(a.ts||0)).forEach(it=>{
+    const rows=sched(it).sort((a,b)=>a.ym<b.ym?-1:a.ym>b.ym?1:0),tt=total(it);
+    const paid=rows.filter(x=>isPaid(it,x,now)).reduce((p,q)=>p+q.amt,0);
+    sh+=`<details data-id="${it.id}"${OP.has(it.id)?' open':''}><summary><span>${esc(it.name)}${it.bank?' · '+esc(it.bank):''}</span><b>باقي ${f(tt-paid)}</b></summary><div class="em" style="text-align:start;padding:6px 0 0">إجمالي ${f(tt)} · مدفوع ${f(paid)} · متبقي ${f(tt-paid)}</div><button class="pb" style="color:var(--rd)" data-c="${it.id}">إلغاء العملية (مرتجع)</button><table>${rows.map(x=>`<tr><td>${x.ym}-${String(it.day||1).padStart(2,'0')}</td><td>${x.label}</td><td>${f(x.amt)}${(it.fees&&it.fees[x.ym+'|'+x.label])?'<br><small>+ رسوم '+f(it.fees[x.ym+'|'+x.label])+'</small>':''}</td><td class="${isPaid(it,x,now)?'pd':'du'}">${isPaid(it,x,now)?'✔ مدفوع'+(it.pm&&it.paid&&it.paid[x.ym+'|'+x.label]?' '+it.paid[x.ym+'|'+x.label]:''):(x.ym<now?'متأخر':(x.ym===now?'مستحق الآن':'قادم'))}${it.g&&!isPaid(it,x,now)?'<br><input data-fi type="number" inputmode="decimal" placeholder="رسوم (اختياري)" style="width:90px;padding:3px;font-size:12px">':''}<br><button class="pb" data-p="${it.id}@${x.ym}|${x.label}">${isPaid(it,x,now)?'تراجع':'سجّل الدفع'}</button></td></tr>`).join('')}${it.g?payRow(it):''}</table></details>`;
+  });
+  $('st').innerHTML=sh||'<div class="em">مفيش أقساط مسجلة</div>';
+  reminders();
+  $('rem').innerHTML=rh?rh+`<div class="row"><b>إجمالي المتبقي</b><b class="a">${f(rt)}</b></div>`:'<div class="em">مفيش أقساط متبقية</div>';
+}
+function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function reminders(){
+  const t=new Date(),td=iso(t),tm=iso(new Date(t.getFullYear(),t.getMonth(),t.getDate()+1)),now=cur();let h='';
+  items.filter(i=>i.type==='inst').forEach(it=>{
+    sched(it).forEach(x=>{
+      if(isPaid(it,x,now))return;
+      const due=x.ym+'-'+String(it.day||1).padStart(2,'0');let tag='';
+      if(due<td)tag='⚠️ متأخر';else if(due===td)tag='🔔 النهاردة';else if(due===tm)tag='⏰ بكرة';else return;
+      h+=`<div class="row"><div>${tag} · ${esc(it.name)}<small>${x.label} · ${due}</small></div><div class="a">${f(x.amt)}</div></div>`;
+    });
+  });
+  $('rm').innerHTML=h?`<div class="card" style="border-color:var(--wr)"><h2>تنبيهات الأقساط</h2>${h}</div>`:'';
+}
+function renderBanks(){banks.sort((a,b)=>{const p=x=>/NBE|CIB|البركة/i.test(x.name)?0:1;return p(a)-p(b)||a.name.localeCompare(b.name,'ar')});
+  const md={spread:'الفائدة بالقسط (كل شهر)',upfront:'الفائدة الأول والقسط الشهر اللي بعدها'};
+  $('bl').innerHTML=banks.length?banks.map(b=>`<div class="row"><div>${esc(b.name)}<small>${b.rate?b.rate+'% · '+(md[b.mode]||''):'لم تُحدد النسبة والنظام بعد'}</small></div><button class="x" data-b="${b.id}">×</button></div>`).join(''):'<div class="em">مفيش بنوك محفوظة لسه</div>';
+  const sel=$('pl'),v=sel.value;
+  sel.innerHTML='<option value="">اختار البنك…</option><option value="none">بدون بنك (من المحل)</option>'+banks.map(b=>`<option value="${b.id}">${esc(b.name)}${b.rate?' ('+b.rate+'%)':''}</option>`).join('');
+  if([...sel.options].some(o=>o.value===v))sel.value=v;renderBS();
+  preview();
+}
+function plan(){const b=banks.find(x=>x.id===$('pl').value),mode=$('ty').value||'0',rate=mode==='0'?0:(+$('ir').value||0);return{mode,rate,bank:b?b.name:($('pl').value==='none'?'من المحل':''),delay:mode==='upfront'?2:(+$('dl').value||1),ok:$('pl').value!==''&&$('ty').value!==''&&($('ty').value==='0'||(+$('ir').value>0))}}
+function plan_old(){const b=banks.find(x=>x.id===$('pl').value);return b?{mode:b.mode,rate:b.rate,bank:b.name,delay:(b.mode==='upfront'?2:(b.delay!=null?b.delay:(b.mode==='spread'?1:2)))}:{mode:'0',rate:0,bank:'',delay:2}}
+const amt=()=>(+$('pr').value||0)*(+$('qt').value||0);
+function preview(){applyTy();
+  $('tq').innerHTML='الإجمالي: '+(+$('qt').value||0)+' × '+f(+$('pr').value||0)+' = <b>'+f(amt())+'</b>';
+  if(kind!=='inst')return;
+  const p=amt(),n=Math.max(1,+$('n').value||1),pl=plan();
+  const it={amount:p,n,mode:pl.mode,rate:pl.rate,delay:pl.mode==='upfront'?2:(+$('dl').value||1),month:$('dm').value||cur()},tot=total(it);
+  const t=pl.mode==='upfront'?`الفايدة ${f(p*pl.rate/100)} في ${addM(it.month,1)} + ${n} قسط × ${f(p/n)}`:`${n} قسط × ${f(tot/n)}`;
+  $('pw').innerHTML=`${t}<br>أول قسط في ${addM(it.month,it.delay)}<br><b>الإجمالي هتدفعه: ${f(tot)}</b>`;
+}
+function tab(k){
+  kind=k;$('t1').classList.toggle('on',k==='cash');$('t2').classList.toggle('on',k==='inst');
+  $('ins').style.display=k==='inst'?'block':'none';
+  $('ld').textContent=k==='inst'?'شهر الشراء':'الشهر';preview();
+}
+$('t1').onclick=()=>tab('cash');$('t2').onclick=()=>tab('inst');
+function applyTy(){const m=$('ty').value,o=$('dl').options;o[0].textContent=m==='spread'?'القسط والفائدة الشهر القادم':(m==='upfront'?'الفائدة الشهر القادم والقسط الشهر اللي بعده':'القسط الشهر القادم');o[1].textContent=m==='upfront'?'الفائدة الشهر القادم والقسط الشهر اللي بعده':(m==='spread'?'القسط والفائدة بعد شهر من الشراء':'القسط بعد شهر من الشراء');$('rw').style.display=(m==='spread'||m==='upfront')?'block':'none';if(m==='upfront'){$('dl').value=2;$('dl').disabled=true}else{$('dl').disabled=false}}
+$('pl').addEventListener('change',()=>{const b=banks.find(x=>x.id===$('pl').value);if(b){if(b.mode)$('ty').value=b.mode;if(b.rate)$('ir').value=b.rate;if(b.delay!=null)$('dl').value=b.delay}applyTy();preview()});
+['pr','qt','n','pl','dm','dl','ty','ir'].forEach(i=>$(i).addEventListener('input',preview));
+$('ct').innerHTML=CATS.map(c=>`<option>${c}</option>`).join('');
+$('mo').value=cur();$('dm').value=cur();$('mo').onchange=render;
+$('nx').onclick=()=>{$('mo').value=addM($('mo').value||cur(),1);render()};
+$('pv').onclick=()=>{$('mo').value=addM($('mo').value||cur(),-1);render()};
+function fail(e){const b=$('bn');b.style.display='block';b.textContent='تعذّر الحفظ. تأكد إن عندك صلاحية «مساهم» أو أعلى على اللينك.'}
+$('add').onclick=async()=>{
+  if(!db){fail();return}
+  if(kind==='gam'){
+    const a=+$('gma').value,n=Math.round(+$('gn').value||0),tt=Math.round(+$('gt').value||0);
+    if(!(a>0)||n<2||tt<1||tt>n){$('gp').innerHTML='<b style="color:var(--rd)">اكتب قيمة الدفعة وعدد الشهور ودورك (من 1 لحد عدد الشهور)</b>';return}
+    const it={type:'inst',g:1,name:$('nm').value.trim()||'جمعية',amount:a*n,qty:1,unit:a*n,month:$('dm').value||cur(),cat:'جمعية',ts:Date.now(),n,mode:'0',rate:0,bank:'',delay:0,pm:1,paid:{},day:Math.min(28,Math.max(1,Math.round(+$('gd').value||1))),turn:tt,fee:0};
+    try{await db.collection('items').add(it);$('nm').value='';$('gma').value='';$('gp').innerHTML='';$('mo').value=it.month;render()}catch(e){fail(e)}
+    return}
+  if(kind==='inst'&&!plan().ok){$('pw').innerHTML='<b style="color:var(--rd)">اختار البنك والطبيعة، واكتب نسبة الفايدة لو في فايدة</b>';return}
+  const qty=+$('qt').value||0,unit=+$('pr').value||0,amount=qty*unit;if(!amount||amount<=0){$('pr').focus();return}
+  const it={type:kind,name:$('nm').value.trim()||'بدون اسم',amount,qty,unit,month:$('dm').value||cur(),cat:$('ct').value,ts:Date.now()};
+  if(kind==='inst'){const pl=plan();it.n=Math.max(1,Math.round(+$('n').value||1));it.mode=pl.mode;it.rate=pl.rate;it.pm=1;it.paid={};it.day=Math.min(28,Math.max(1,Math.round(+$('dd').value||1)));it.bank=pl.bank;it.delay=pl.mode==='upfront'?2:(+$('dl').value||1);it.cat='أقساط'}
+  try{await db.collection('items').add(it);$('nm').value='';$('pr').value='';$('qt').value=1;$('mo').value=it.month;render();preview()}catch(e){fail(e)}
+};
+$('st').onclick=async e=>{
+  const cb=e.target.closest('[data-c]');
+  if(cb&&db){const cid=cb.dataset.c;if(ARM['c'+cid]!==1){ARM['c'+cid]=1;cb.textContent='اضغط تاني لتأكيد إلغاء العملية كلها';setTimeout(()=>{ARM['c'+cid]=0;render()},5000);return}ARM['c'+cid]=0;try{await db.collection('items').doc(cid).delete()}catch(x){fail(x)}return}
+  const b=e.target.closest('[data-p]');if(!b||!db)return;
+  const[id,k]=b.dataset.p.split('@'),it=items.find(x=>x.id===id);if(!it)return;
+  const now=cur();let paid={...(it.paid||{})};
+  if(!it.pm)sched(it).forEach(x=>{if(x.ym<now)paid[x.ym+'|'+x.label]=x.ym+'-01'});
+  if(paid[k]){if(ARM[id+k]!==1){ARM[id+k]=1;b.textContent='اضغط تاني للتأكيد';setTimeout(()=>{ARM[id+k]=0;render()},4000);return}ARM[id+k]=0;delete paid[k]}else paid[k]=new Date().toISOString().slice(0,10);
+  let fees={...(it.fees||{})};if(!paid[k])delete fees[k];else{const inp=b.closest('td').querySelector('input[data-fi]'),fv=+(inp&&inp.value)||0;if(fv>0)fees[k]=fv}
+  const{id:_i,...rest}=it;
+  try{await db.collection('items').doc(id).set({...rest,paid,pm:1,fees})}catch(x){fail(x)}
+};
+$('list').onclick=async e=>{
+  const d=e.target.dataset.d;if(!d||!db)return;
+  const it=items.find(x=>x.id===d);
+  if(it&&it.type==='inst'){if(ARM['d'+d]!==1){ARM['d'+d]=1;e.target.textContent='؟ تأكيد';setTimeout(()=>{ARM['d'+d]=0;render()},4000);return}ARM['d'+d]=0}
+  try{await db.collection('items').doc(d).delete()}catch(e){fail(e)}
+};
+function renderBS(){const s=$('bs'),v=s.value;s.innerHTML='<option value="">اختار بنك…</option>'+banks.map(b=>`<option value="${b.id}">${esc(b.name)}</option>`).join('');if([...s.options].some(o=>o.value===v))s.value=v;showBank(false)}
+function showBank(fill){const b=banks.find(x=>x.id===$('bs').value),md={spread:'الفائدة بالقسط (كل شهر)',upfront:'الفائدة الأول والقسط الشهر اللي بعدها'};
+  $('bdel').style.display=b?'block':'none';
+  $('bi').textContent=b?(b.rate?b.rate+'% · '+(md[b.mode]||''):(md[b.mode]||'لم تُحدد النسبة والنظام بعد')):'';
+  if(b&&fill){$('bk').value=b.name;$('rt').value=b.rate||'';$('md').value=b.mode||'spread';$('bd').value=b.delay!=null?b.delay:''}}
+$('bs').addEventListener('change',()=>showBank(true));
+$('st').addEventListener('toggle',e=>{const d=e.target;if(d&&d.dataset&&d.dataset.id){if(d.open)OP.add(d.dataset.id);else OP.delete(d.dataset.id)}},true);
+$('t3').onclick=()=>tab('gam');
+const _tab=tab;
+tab=function(k){_tab(k==='gam'?'cash':k);kind=k;const h=k==='gam';$('t1').classList.toggle('on',k==='cash');$('t3').classList.toggle('on',h);$('gm').style.display=h?'block':'none';$('pr').closest('.g2').style.display=h?'none':'grid';$('ct').previousElementSibling.style.display=h?'none':'block';$('ct').style.display=h?'none':'block';$('tq').style.display=h?'none':'block';$('ld').textContent=h?'شهر أول دفعة':(k==='inst'?'شهر الشراء':'الشهر');$('nm').placeholder=h?'مثلًا: جمعية العمل / Money Fellows':'مثلًا: زجاجة زيت'};
+function gpv(){const a=+$('gma').value||0,n=+$('gn').value||0,t=Math.min(n,Math.max(1,+$('gt').value||1)),fe=0;$('gp').innerHTML=a&&n>1?`${n} دفعة × ${f(a)} = ${f(a*n)}<br>الاستلام في ${addM($('dm').value||cur(),t-1)}: <b>${f(a*n-fe)}</b>`:''}
+['gma','gn','gt','dm'].forEach(i=>$(i).addEventListener('input',gpv));
+$('bdel').onclick=async()=>{const id=$('bs').value;if(!id||!db)return;if(ARM['b'+id]!==1){ARM['b'+id]=1;$('bdel').textContent='اضغط تاني لتأكيد الحذف';setTimeout(()=>{ARM['b'+id]=0;$('bdel').textContent='حذف البنك ده'},4000);return}ARM['b'+id]=0;$('bdel').textContent='حذف البنك ده';try{await db.collection('banks').doc(id).delete();$('bs').value=''}catch(e){fail(e)}};
+$('ab').onclick=async()=>{
+  const name=$('bk').value.trim();if(!name||!db){if(!db)fail();return}
+  const data={name,rate:+$('rt').value||0,mode:$('md').value,delay:$('bd').value?+$('bd').value:null};try{const ex=banks.find(x=>x.name===name);if(ex)await db.collection('banks').doc(ex.id).set(data);else await db.collection('banks').add(data);$('bk').value='';$('rt').value=''}catch(e){fail(e)}
+};
+$('bl').onclick=async e=>{const b=e.target.dataset.b;if(b&&db){try{await db.collection('banks').doc(b).delete()}catch(x){fail(x)}}};
+let bt;$('bg').oninput=()=>{const m=$('mo').value||cur(),v=+$('bg').value||0;bmap[m]=v;render();clearTimeout(bt);bt=setTimeout(async()=>{if(db){try{await db.collection('budgets').doc(m).set({budget:v})}catch(e){fail(e)}}},700)};
+$('gst').onclick=()=>$('st').scrollIntoView({behavior:'smooth',block:'start'});
+render();renderBanks();
+(async()=>{
+  const LS={get(k){try{return JSON.parse(localStorage.getItem('demo_'+k)||'{}')}catch(e){return{}}},set(k,v){try{localStorage.setItem('demo_'+k,JSON.stringify(v))}catch(e){}}};
+  const subs={};
+  const snap=c=>({docs:Object.entries(LS.get(c)).map(([id,d])=>({id,data:()=>d}))});
+  const ping=c=>(subs[c]||[]).forEach(f=>f(snap(c)));
+  const mk=c=>({
+    add:async d=>{const id=Math.random().toString(36).slice(2,12),o=LS.get(c);o[id]=d;LS.set(c,o);ping(c);return{id}},
+    doc:id=>({set:async d=>{const o=LS.get(c);o[id]=d;LS.set(c,o);ping(c)},delete:async()=>{const o=LS.get(c);delete o[id];LS.set(c,o);ping(c)}}),
+    onSnapshot:f=>{(subs[c]=subs[c]||[]).push(f);f(snap(c))}
+  });
+  db={collection:mk,doc:p=>{const a=p.split('/');return{onSnapshot:f=>f({data:()=>LS.get(a[0])[a[1]]})}}};
+  try{
+    if(!localStorage.getItem('demo_seeded')){
+      const t=Date.now(),m=cur(),bi={};
+      ['البنك الأهلي المصري (NBE)','البنك التجاري الدولي (CIB)','بنك البركة مصر','بنك مصر','بنك القاهرة','بنك الإسكندرية','بنك QNB مصر','بنك HSBC مصر','بنك فيصل الإسلامي المصري','بنك أبوظبي الأول مصر (FAB)','بنك الكويت الوطني – مصر (NBK)','بنك الإسكان والتعمير (HDB)','المصرف المتحد','البنك العربي الأفريقي الدولي (AAIB)','بنك قناة السويس (SCB)','كريدي أجريكول مصر','بنك المشرق مصر','بنك عودة مصر'].forEach((n,k)=>{bi['b'+k]={name:n,rate:0,mode:'',delay:null}});
+      LS.set('banks',bi);
+      LS.set('items',{
+        a1:{type:'cash',name:'زجاجات زيت',amount:90,qty:3,unit:30,month:m,cat:'أكل وشرب',ts:t},
+        a2:{type:'cash',name:'فرخة',amount:100,qty:1,unit:100,month:m,cat:'أكل وشرب',ts:t+1},
+        a3:{type:'inst',name:'مكنسة كهربائية (مثال)',amount:2000,qty:1,unit:2000,month:m,cat:'أقساط',ts:t+2,n:6,mode:'0',rate:0,bank:'من المحل',delay:1,pm:1,paid:{},day:5},
+        a4:{type:'inst',g:1,name:'جمعية تجريبية',amount:6000,qty:1,unit:6000,month:m,cat:'جمعية',ts:t+3,n:6,mode:'0',rate:0,bank:'',delay:0,pm:1,paid:{},day:1,turn:3,fee:0}
+      });
+      LS.set('budgets',{[m]:{budget:4000}});
+      localStorage.setItem('demo_seeded','1');
+    }
+  }catch(e){}
+  db.collection('items').onSnapshot(s=>{items=s.docs.map(d=>({id:d.id,...d.data()}));render()});
+  db.collection('budgets').onSnapshot(s=>{bmap={};s.docs.forEach(d=>{bmap[d.id]=d.data().budget});render()});
+  db.collection('banks').onSnapshot(s=>{banks=s.docs.map(d=>({id:d.id,...d.data()}));renderBanks()});
+  $('rst').onclick=()=>{if(ARM.rst!==1){ARM.rst=1;$('rst').textContent='اضغط تاني للتأكيد';setTimeout(()=>{ARM.rst=0;$('rst').textContent='مسح كل بياناتي ورجوع للمثال'},4000);return}
+    try{Object.keys(localStorage).filter(k=>k.startsWith('demo_')).forEach(k=>localStorage.removeItem(k))}catch(e){}location.reload()};
+})();
+</script>
+</body>
+</html>
